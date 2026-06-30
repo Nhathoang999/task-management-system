@@ -1,7 +1,5 @@
 # Enterprise UI Test Automation Portfolio
 
-![Playwright HTML Report Mockup](https://raw.githubusercontent.com/microsoft/playwright/main/docs/src/img/html-reporter.png)
-
 ## Overview
 This repository serves as a **Enterprise UI Test Automation Portfolio**. It demonstrates a transition from a basic CRUD application into a fully automated, CI/CD integrated, and professionally documented quality assurance project. 
 
