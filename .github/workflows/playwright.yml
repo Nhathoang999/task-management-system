@@ -10,58 +10,55 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-
+    
     steps:
     - uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    
+    - uses: actions/setup-node@v4
       with:
-        python-version: '3.10'
+        node-version: lts/*
         
-    - name: Install backend dependencies
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: Install Python Dependencies
       run: |
-        cd backend
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r backend/requirements.txt
         
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-
-    - name: Install frontend dependencies
+    - name: Start Backend
+      run: |
+        source venv/bin/activate
+        cd backend
+        uvicorn app.main:app --host 0.0.0.0 --port 8000 &
+        
+    - name: Install Frontend Dependencies
       run: |
         cd frontend
-        npm install
+        npm ci
         
-    - name: Install Playwright dependencies
+    - name: Start Frontend
+      run: |
+        cd frontend
+        npm run dev &
+        
+    - name: Wait for services
+      run: sleep 10
+        
+    - name: Install Playwright Dependencies
       run: |
         cd playwright
-        npm install
+        npm ci
         npx playwright install --with-deps
-
-    - name: Start Backend Server
-      run: |
-        cd backend
-        uvicorn app.main:app --host 127.0.0.1 --port 8000 &
-      
-    - name: Start Frontend Server
-      run: |
-        cd frontend
-        npm run dev -- --host 127.0.0.1 --port 5173 &
-
-    - name: Wait for servers to be ready
-      run: |
-        npx wait-on http-get://127.0.0.1:8000/docs
-        npx wait-on http-get://127.0.0.1:5173
-
+        
     - name: Run Playwright tests
       run: |
         cd playwright
         npx playwright test
-
-    - name: Upload Playwright report
+        
+    - name: Upload HTML report
       uses: actions/upload-artifact@v4
       if: always()
       with:

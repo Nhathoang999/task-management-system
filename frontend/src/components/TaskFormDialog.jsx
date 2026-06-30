@@ -69,7 +69,6 @@ export default function TaskFormDialog({ open, onClose, task }) {
             error={!!error && error.includes('Title')}
             helperText={!!error && error.includes('Title') ? error : ''}
             slotProps={{ htmlInput: { 'data-testid': 'task-title-input' } }}
-            required
           />
           <TextField
             margin="dense"

@@ -1,0 +1,14 @@
+[
+  {
+    "scenario": "Missing Title",
+    "title": "",
+    "description": "This should fail",
+    "expectedError": "Title cannot be empty"
+  },
+  {
+    "scenario": "Past Due Date",
+    "title": "Impossible Task",
+    "dueDate": "2020-01-01",
+    "expectedError": "Due date cannot be in the past"
+  }
+]

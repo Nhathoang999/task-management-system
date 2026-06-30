@@ -1,0 +1,14 @@
+[
+  {
+    "title": "Complete Playwright Automation",
+    "description": "Write all POM based tests for the portfolio",
+    "status": "In Progress",
+    "priority": "High"
+  },
+  {
+    "title": "Review AI Test Cases",
+    "description": "Use Gemini to review boundary cases",
+    "status": "Pending",
+    "priority": "Medium"
+  }
+]

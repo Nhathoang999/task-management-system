@@ -1,7 +1,7 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Locator, Page, expect } from '@playwright/test';
+import { BasePage } from './BasePage';
 
-export class DashboardPage {
-  readonly page: Page;
+export class DashboardPage extends BasePage {
   readonly createTaskButton: Locator;
   readonly logoutButton: Locator;
   readonly searchInput: Locator;
@@ -17,7 +17,7 @@ export class DashboardPage {
   readonly saveTaskButton: Locator;
 
   constructor(page: Page) {
-    this.page = page;
+    super(page);
     this.createTaskButton = page.getByTestId('create-task-button');
     this.logoutButton = page.getByTestId('logout-button');
     this.searchInput = page.getByTestId('search-task-input');
@@ -35,56 +35,56 @@ export class DashboardPage {
   }
 
   async createTask(title: string, desc?: string, status?: string, priority?: string) {
-    await this.createTaskButton.click();
-    await this.taskTitleInput.fill(title);
-    if (desc) await this.taskDescInput.fill(desc);
+    await this.click(this.createTaskButton);
+    await this.fill(this.taskTitleInput, title);
+    if (desc) await this.fill(this.taskDescInput, desc);
     
     if (status) {
-      await this.taskStatusSelect.click();
-      await this.page.getByRole('option', { name: status, exact: true }).click();
+      await this.click(this.taskStatusSelect);
+      await this.click(this.page.getByRole('option', { name: status, exact: true }));
     }
     if (priority) {
-      await this.taskPrioritySelect.click();
-      await this.page.getByRole('option', { name: priority, exact: true }).click();
+      await this.click(this.taskPrioritySelect);
+      await this.click(this.page.getByRole('option', { name: priority, exact: true }));
     }
     
-    await this.saveTaskButton.click();
+    await this.click(this.saveTaskButton);
     await expect(this.taskTitleInput).toBeHidden();
   }
 
   async updateTask(oldTitle: string, newTitle: string) {
-    const taskCard = this.page.locator('.MuiCard-root', { hasText: oldTitle });
-    await taskCard.locator('button:has-text("Edit")').click();
+    const taskCard = this.page.locator('.MuiCard-root', { hasText: oldTitle }).first();
+    await this.click(taskCard.locator('button:has-text("Edit")'));
     
     // Clear and type new title
-    await this.taskTitleInput.fill('');
-    await this.taskTitleInput.fill(newTitle);
+    await this.fill(this.taskTitleInput, '');
+    await this.fill(this.taskTitleInput, newTitle);
     
-    await this.saveTaskButton.click();
+    await this.click(this.saveTaskButton);
     await expect(this.taskTitleInput).toBeHidden();
   }
 
   async deleteTask(title: string) {
-    const taskCard = this.page.locator('.MuiCard-root', { hasText: title });
+    const taskCard = this.page.locator('.MuiCard-root', { hasText: title }).first();
     this.page.once('dialog', dialog => dialog.accept());
-    await taskCard.locator('button:has-text("Delete")').click();
+    await this.click(taskCard.locator('button:has-text("Delete")'));
   }
 
   async searchTask(title: string) {
-    await this.searchInput.fill(title);
+    await this.fill(this.searchInput, title);
   }
 
   async filterByStatus(status: string) {
-    await this.statusFilter.click();
-    await this.page.getByRole('option', { name: status, exact: true }).click();
+    await this.click(this.statusFilter);
+    await this.click(this.page.getByRole('option', { name: status, exact: true }));
   }
 
   async filterByPriority(priority: string) {
-    await this.priorityFilter.click();
-    await this.page.getByRole('option', { name: priority, exact: true }).click();
+    await this.click(this.priorityFilter);
+    await this.click(this.page.getByRole('option', { name: priority, exact: true }));
   }
 
   getTaskCard(title: string): Locator {
-    return this.page.locator('.MuiCard-root', { hasText: title });
+    return this.page.locator('.MuiCard-root', { hasText: title }).first();
   }
 }
