@@ -2,19 +2,19 @@
 
 ![Playwright HTML Report Mockup](https://raw.githubusercontent.com/microsoft/playwright/main/docs/src/img/html-reporter.png)
 
-## 📌 Overview
+## Overview
 This repository serves as a **Enterprise UI Test Automation Portfolio**. It demonstrates a transition from a basic CRUD application into a fully automated, CI/CD integrated, and professionally documented quality assurance project. 
 
 The core application is a Task Management System, but the primary focus of this repo is the **QA Architecture**, **Playwright Automation Framework (POM)**, and **Manual Testing Artifacts**.
 
-## 🏗️ Project Architecture & Tech Stack
+## Project Architecture & Tech Stack
 - **Frontend**: React, Material-UI, Vite
 - **Backend**: FastAPI, SQLite, Python 3.11
 - **Automation**: Playwright (TypeScript)
 - **CI/CD**: GitHub Actions
 - **AI Integration**: Google Gemini API (for Test Case Review)
 
-## 📂 Project Structure
+## Project Structure
 ```text
 task-management-testing/
 ├── backend/                  # FastAPI Application
@@ -41,7 +41,7 @@ task-management-testing/
 └── .github/workflows/        # CI/CD Pipelines
 ```
 
-## 🚀 Quick Start
+## Quick Start
 ### 1. Run the Application
 Start both frontend and backend locally to ensure the environment is ready for automation.
 ```bash
@@ -78,7 +78,7 @@ npx playwright test --grep @regression
 npx playwright show-report
 ```
 
-## 🛠️ QA Workflow & Best Practices
+## QA Workflow & Best Practices
 This project embodies industry-standard QA methodologies:
 1. **Test Design**: Black-box techniques (Equivalence Partitioning, Boundary Value Analysis) used in `test-cases.xlsx`.
 2. **Page Object Model (POM)**: High maintainability by abstracting UI locators into classes (`BasePage.ts`).
@@ -86,13 +86,13 @@ This project embodies industry-standard QA methodologies:
 4. **Defect Lifecycle**: Documented bugs in `bugs/` with clear Reproduction Steps, Expected/Actual Results, and Root Cause analysis.
 5. **Continuous Testing (CI)**: `playwright.yml` GitHub Action triggers on every push/PR to run the full suite and upload HTML reports.
 
-## 🤖 Exposure to AI-Assisted Testing
+## Exposure to AI-Assisted Testing
 To keep up with modern QA trends, this repository includes an `ai/` module.
 Instead of heavily relying on AI to blindly generate tests, a Python script uses the **Gemini API** to read the existing manual test cases and suggest **missing edge cases** (e.g., missed boundary values or negative XSS scenarios). QA engineers then review and accept/reject these suggestions. 
 
 See `ai/review-result.md` for a demonstration of this workflow.
 
-## 📊 Playwright HTML Report
+## Playwright HTML Report
 The execution generates a professional HTML report containing:
 - PASS / FAIL metrics
 - Test Duration
